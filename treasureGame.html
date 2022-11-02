@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Treasure Game</title>
+    <style>
+        /* *{
+            width: 0;
+            height: 0;
+            list-style: none;
+        } */
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(178, 193, 156);
+        }
+        h1{
+            margin-top: 35px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: rgb(58, 100, 17);
+        }
+        img{
+            border-radius: 60px;
+        }
+        p{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 30px;
+            color: rgb(94, 78, 27);
+            font-weight: 600;
+            background-color: rgb(238, 221, 200);
+            padding: 5px 20px;
+            border-radius: 60px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1 id="heading"> Click Map to Find the Buried Treasure!</h1>
+    <img id="map" width="500" height="500" src="map2.jpg" alt="map">
+    <p id="distance"></p>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.js" integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
+    <script>
+        function getRandomNumber(size){
+            return Math.floor(Math.random()*size)
+        }
+// ==========================================================
+        let getDistance = function(event, target){
+                diffX = event.offsetX - target.x
+                diffY = event.offsetY - target.y
+                return Math.sqrt((diffX*diffX)+(diffY*diffY))
+            }
+// ==========================================================
+            const getDistanceHint = function(distance){
+            if(distance<10){
+                return "(10m)The teasure is just around us!!"
+            } else if(distance<20){
+                return "(20m)Almost There!"
+            } else if(distance<40){
+                return "(40m)I can already smell the treasure from here!"
+            } else if(distance<80){
+               return "(80m)I think we are even closer now!"
+            } else if(distance<160){
+              return "(160m)we are getting closer!"
+            } else if(distance<320){
+               return "(320m)we are so lost!"
+            } else {
+               return "Nothing around here for sure."
+            }
+        }
+// ==========================================================
+        let width = 400
+        let height = 400
+        let clicks = 0
+// ==========================================================
+        let target = {
+            x:getRandomNumber(width),
+            y:getRandomNumber(height)
+        }
+// ==========================================================
+        $("#map").click(function(event){
+            clicks++
+            let distance = getDistance(event, target)
+            let distanceHint = getDistanceHint(distance)
+            $("#distance").text(distanceHint)
+
+            if(distance<8){
+                alert ("Found the treasure in "+clicks+" clicks!")
+            }
+
+           
+        })
+
+        
+                
+
+
+         
+    </script>
+</body>
+</html>
